@@ -1,0 +1,43 @@
+{
+  "name": "@tianyuio/worldbank-cli",
+  "version": "1.0.0",
+  "description": "World Bank Open Data CLI",
+  "type": "module",
+  "bin": {
+    "wb": "./src/cli.js"
+  },
+  "main": "./src/cli.js",
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "start": "node ./src/cli.js"
+  },
+  "keywords": [
+    "worldbank",
+    "world-bank",
+    "cli",
+    "open-data",
+    "economics",
+    "development"
+  ],
+  "author": "tianyuio <tianyu.io@outlook.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tianyuio/worldbank-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tianyuio/worldbank-cli/issues"
+  },
+  "homepage": "https://github.com/tianyuio/worldbank-cli#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
