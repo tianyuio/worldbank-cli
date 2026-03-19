@@ -16,12 +16,33 @@ export function printJson(data) {
   console.log(JSON.stringify(data, null, 2));
 }
 
+function escapeCsvValue(value) {
+  const stringValue = String(value ?? "");
+  if (/[",\n]/.test(stringValue)) {
+    return `"${stringValue.replace(/"/g, '""')}"`;
+  }
+
+  return stringValue;
+}
+
 export function printKeyValue(data) {
   const rows = Object.entries(data).filter(([, value]) => value !== undefined && value !== "");
   const keyWidth = Math.max(...rows.map(([key]) => key.length), 0);
 
   for (const [key, value] of rows) {
     console.log(`${pad(key, keyWidth)}  ${value}`);
+  }
+}
+
+export function printCsv(rows, columns) {
+  const header = columns.map((column) => escapeCsvValue(column.header)).join(",");
+  console.log(header);
+
+  for (const row of rows) {
+    const line = columns
+      .map((column) => escapeCsvValue(column.getValue(row)))
+      .join(",");
+    console.log(line);
   }
 }
 

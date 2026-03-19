@@ -1,6 +1,6 @@
 # World Bank CLI 🌐
 
-[![npm version](https://img.shields.io/npm/v/%40tianyuio%2Fworldbank-cli.svg)](https://www.npmjs.com/package/@tianyuio/worldbank-cli)
+[![npm version](https://img.shields.io/npm/v/@tianyuio/worldbank-cli)](https://www.npmjs.com/package/@tianyuio/worldbank-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 World Bank CLI based on World Bank Open Data API, which provides query capabilities for global economic and social development data.
@@ -12,7 +12,11 @@ World Bank CLI based on World Bank Open Data API, which provides query capabilit
 - Search indicators by keyword
 - Query time-series data for a country and indicator
 - Use friendly indicator aliases such as `GDP`, `POPULATION`, and `LIFE_EXPECTANCY`
+- Show the latest available observation with `--latest`
+- List supported World Bank income-level codes directly in the terminal
+- List supported World Bank region codes directly in the terminal
 - Output either readable tables or raw JSON
+- Export list and time-series output as CSV
 
 ## Installation
 
@@ -32,10 +36,12 @@ npx @tianyuio/worldbank-cli help
 ## Usage
 
 ```bash
-wb countries [--region REGION] [--income-level LEVEL] [--limit N] [--json]
+wb countries [--region REGION] [--income-level LEVEL] [--limit N] [--json] [--format table|csv|json]
 wb country <country-code> [--json]
-wb indicators <keyword> [--limit N] [--json]
-wb data <country-code> <indicator> [--years N] [--json]
+wb indicators <keyword> [--limit N] [--json] [--format table|csv|json]
+wb data <country-code> <indicator> [--years N] [--latest] [--json] [--format table|csv|json]
+wb income-levels [--json] [--format table|csv|json]
+wb regions [--json] [--format table|csv|json]
 wb aliases
 ```
 
@@ -46,7 +52,10 @@ wb countries --limit 10
 wb countries --region EAS --limit 20
 wb country CN
 wb indicators literacy
-wb data US GDP --years 5
+wb data US GDP --latest
+wb data US GDP --years 5 --format csv
+wb income-levels
+wb regions
 wb data IN SP.POP.TOTL --json
 wb aliases
 ```
@@ -63,6 +72,7 @@ Options:
 - `--income-level <code>`: Filter by income level code
 - `--limit <n>`: Limit the number of returned rows
 - `--json`: Print raw JSON instead of a table
+- `--format <type>`: Print as `table`, `csv`, or `json`
 
 ### `wb country <country-code>`
 
@@ -84,6 +94,7 @@ Examples:
 ```bash
 wb indicators gdp
 wb indicators "life expectancy"
+wb indicators gdp --format csv
 ```
 
 ### `wb data <country-code> <indicator>`
@@ -98,14 +109,40 @@ The `<indicator>` argument accepts either:
 Options:
 
 - `--years <n>`: Number of years to fetch, default `10`
+- `--latest`: Return only the latest available observation
 - `--json`: Print raw JSON instead of a table
+- `--format <type>`: Print as `table`, `csv`, or `json`
 
 Examples:
 
 ```bash
 wb data CN GDP --years 10
+wb data US GDP --latest
+wb data US GDP --years 5 --format csv
 wb data KE LIFE_EXPECTANCY
 wb data DE NY.GDP.PCAP.CD
+```
+
+### `wb income-levels`
+
+List the common World Bank income-level codes used by the `wb countries --income-level ...` filter.
+
+Examples:
+
+```bash
+wb income-levels
+wb income-levels --format csv
+```
+
+### `wb regions`
+
+List the common World Bank region codes used by the `wb countries --region ...` filter.
+
+Examples:
+
+```bash
+wb regions
+wb regions --format csv
 ```
 
 ### `wb aliases`
@@ -159,6 +196,16 @@ Print the built-in alias table for common indicators.
 | HIV_PREVALENCE | Prevalence of HIV | % of population ages 15-49 |
 | MALNUTRITION | Prevalence of undernourishment | % of population |
 | TUBERCULOSIS | Incidence of tuberculosis | per 100,000 people |
+
+### Common Country Codes
+
+| Country | Code | Country | Code |
+|------|------|------|------|
+| China | CN | United States | US |
+| Japan | JP | Germany | DE |
+| United Kingdom | GB | France | FR |
+| India | IN | Brazil | BR |
+| Russia | RU | Australia | AU |
 
 ## Project Structure
 

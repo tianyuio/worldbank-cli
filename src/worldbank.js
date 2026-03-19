@@ -63,6 +63,24 @@ export const COMMON_INDICATORS = {
   TUBERCULOSIS: "SH.TBS.INCD"
 };
 
+export const COMMON_INCOME_LEVELS = [
+  { code: "LIC", name: "Low income" },
+  { code: "LMC", name: "Lower middle income" },
+  { code: "UMC", name: "Upper middle income" },
+  { code: "MIC", name: "Middle income" },
+  { code: "HIC", name: "High income" }
+];
+
+export const COMMON_REGIONS = [
+  { code: "EAS", name: "East Asia and Pacific" },
+  { code: "ECS", name: "Europe and Central Asia" },
+  { code: "LCN", name: "Latin America and Caribbean" },
+  { code: "MEA", name: "Middle East and North Africa" },
+  { code: "NAC", name: "North America" },
+  { code: "SAS", name: "South Asia" },
+  { code: "SSF", name: "Sub-Saharan Africa" }
+];
+
 export function resolveIndicator(input) {
   const normalized = input.trim().toUpperCase().replace(/[-\s]/g, "_");
   return COMMON_INDICATORS[normalized] ?? input;
@@ -208,4 +226,12 @@ export async function getIndicatorData(countryCode, indicator, { years = 10 } = 
   );
 
   return series.filter((entry) => entry.value !== null);
+}
+
+export function getIncomeLevels() {
+  return COMMON_INCOME_LEVELS;
+}
+
+export function getRegions() {
+  return COMMON_REGIONS;
 }
